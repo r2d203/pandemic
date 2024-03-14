@@ -1,0 +1,45 @@
+package Datos_y_ciudades;
+import java.util.*;
+import java.io.*;
+
+
+public class Datos_y_ciudades {
+	public static void main(String[] args) {
+		Scanner teclado = new Scanner(System.in);
+		System.out.println("Introduce la ruta donde tienes los  archivos");
+		String NomFit = teclado.next();
+		System.out.println("Leiendo el fichero...");
+		LeerFicherosTxt(NomFit);
+	}
+	public static void LeerFicherosTxt(String NomFit) {
+			// Creamos un String que va a contener todo el texto del archivo
+			String s;
+			try {
+				// Abrir el fichero indicado en la variable nombreFichero
+				FileReader fr = new FileReader(NomFit);
+				BufferedReader br = new BufferedReader(fr);
+
+				do {
+					s = br.readLine();
+					if (s != null){
+						String[] partes = s.split(";");
+						
+						 String ciudad = partes[0];
+						 String nums = partes[1];
+						 String nums2 = partes[2];
+						 String[] continua = partes[3].split(",");
+						 System.out.println("Silico actua en " + ciudad + " con los numeros " + nums + ", " + nums2 + " y cuyas ciudades colindantes son " + Arrays.toString(continua));
+
+					}
+				} while (s != null);
+
+				// Cerrar el fichero
+				fr.close();
+				br.close();
+			} catch (IOException e) {
+				System.out.println("Error E/S: " + e);
+			}
+		
+	}
+
+}
