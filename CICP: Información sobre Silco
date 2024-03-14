@@ -1,0 +1,19 @@
+package cap1;
+import java.util.*;
+
+public class Cap1 {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String entrada = sc.nextLine();
+		String[] partes = entrada.split(";");
+		
+	 String ciudad = partes[0];
+	 String nums = partes[1];
+	 String nums2 = partes[2];
+	 String[] continua = partes[3].split(",");
+	 
+	 System.out.println("Silico actua en " + ciudad + " con los numeros " + nums + ", " + nums2 + " y cuyas ciudades colindantes son " + Arrays.toString(continua));
+	}
+
+}
