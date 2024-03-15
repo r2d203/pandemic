@@ -64,7 +64,7 @@ public class Ciudades {
 
 		private static void mostrarDatos() { // Método para mostrar datos almacenados en el archivo
 		        try { // Bloque try-catch para manejar excepciones de entrada/salida
-		            File file = new File("Datos.txt"); // Creación de un objeto File para representar el archivo
+		            File file = new File("ciudadesRedactadas.txt"); // Creación de un objeto File para representar el archivo
 		            if (!file.exists()) { // Verificación de si el archivo existe
 		                System.out.println("El fichero no existe. Primero debe guardar datos."); // Mensaje de error si el archivo no existe
 		                return; // Salida del método
@@ -74,7 +74,5 @@ public class Ciudades {
 		        }   
 
   }	     
-
-		           
-		 
+	 
 		            
