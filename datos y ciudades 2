@@ -1,0 +1,80 @@
+package Act2;
+
+
+import java.io.*; 
+import java.util.*;
+
+
+
+public class Ciudades {
+	public static void main(String[] args) {
+		Scanner teclado = new Scanner(System.in);
+		System.out.println("Introduce la ruta donde tienes los  archivos: ");
+		String NomFit = teclado.next();
+		System.out.println("Leyendo el fichero...");
+		LeerFicherosTxt(NomFit);
+	}
+	public static void LeerFicherosTxt(String NomFit) {
+			// Creamos un String que va a contener todo el texto del archivo
+			String s;
+			try {
+				// Abrir el fichero indicado en la variable nombreFichero
+				FileReader fr = new FileReader(NomFit);
+				BufferedReader br = new BufferedReader(fr);
+
+				do {
+					s = br.readLine();
+					if (s != null){
+						String[] partes = s.split(";");
+						
+						 String ciudad = partes[0];
+						 String nums = partes[1];
+						 String nums2 = partes[2];
+						 String[] continua = partes[3].split(",");
+						 System.out.println("Silico actua en " + ciudad + " con los numeros " + nums + ", " + nums2 + " y cuyas ciudades colindantes son " + Arrays.toString(continua));
+
+					}
+				} while (s != null);
+
+				// Cerrar el fichero
+				fr.close();
+				br.close();
+			} catch (IOException e) {
+				System.out.println("Error E/S: " + e);
+				
+			}
+			
+	}
+			
+		    private static void guardarDatos() { // Método para guardar datos en el archivo
+		        try { // Bloque try-catch para manejar excepciones de entrada/salida
+		            FileWriter writer = new FileWriter("ciudadesRedactadas.txt"); // Creación de un objeto FileWriter para escribir en el archivo
+		            BufferedWriter bufferedWriter = new BufferedWriter(writer); // Creación de un objeto BufferedWriter para escribir texto de forma eficiente
+		            Scanner scanner = new Scanner(System.in); // Creación de un objeto Scanner para leer desde la entrada estándar
+		            
+
+		            System.out.println("Datos guardados correctamente en el fichero."); // Mensaje de confirmación
+		        } catch (IOException e) { // Captura de excepciones de entrada/salida
+		            System.out.println("Error al guardar los datos en el fichero."); // Mensaje de error
+		       
+		        
+		        }       
+		   
+
+
+		private static void mostrarDatos() { // Método para mostrar datos almacenados en el archivo
+		        try { // Bloque try-catch para manejar excepciones de entrada/salida
+		            File file = new File("Datos.txt"); // Creación de un objeto File para representar el archivo
+		            if (!file.exists()) { // Verificación de si el archivo existe
+		                System.out.println("El fichero no existe. Primero debe guardar datos."); // Mensaje de error si el archivo no existe
+		                return; // Salida del método
+		            }
+
+
+		        }   
+
+  }	     
+
+		           
+		 
+		            
