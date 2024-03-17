@@ -1,45 +1,251 @@
-package Datos_y_ciudades;
+package pandemic;
 import java.util.*;
 import java.io.*;
 
-
 public class Datos_y_ciudades {
-	public static void main(String[] args) {
-		Scanner teclado = new Scanner(System.in);
-		System.out.println("Introduce la ruta donde tienes los  archivos");
-		String NomFit = teclado.next();
-		System.out.println("Leiendo el fichero...");
-		LeerFicherosTxt(NomFit);
-	}
-	public static void LeerFicherosTxt(String NomFit) {
-			// Creamos un String que va a contener todo el texto del archivo
-			String s;
-			try {
-				// Abrir el fichero indicado en la variable nombreFichero
-				FileReader fr = new FileReader(NomFit);
-				BufferedReader br = new BufferedReader(fr);
+    public static void main(String[] args) {
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Introduce la ruta donde tienes los archivos");
+        String NomFit = teclado.next();
+        System.out.println("Leyendo el fichero...");
+        LeerFicherosTxt(NomFit);
+    }
 
-				do {
-					s = br.readLine();
-					if (s != null){
-						String[] partes = s.split(";");
-						
-						 String ciudad = partes[0];
-						 String nums = partes[1];
-						 String nums2 = partes[2];
-						 String[] continua = partes[3].split(",");
-						 System.out.println("Silico actua en " + ciudad + " con los numeros " + nums + ", " + nums2 + " y cuyas ciudades colindantes son " + Arrays.toString(continua));
+    // Método para leer un archivo de texto y calcular distancias entre ciudades
+    public static void LeerFicherosTxt(String NomFit) {
+        // ArrayList para almacenar las líneas del archivo
+        ArrayList<String> lineasArchivo = new ArrayList<>();
 
-					}
-				} while (s != null);
+        try {
+            FileReader fr = new FileReader(NomFit);
+            BufferedReader br = new BufferedReader(fr);
+            String linea;
 
-				// Cerrar el fichero
-				fr.close();
-				br.close();
-			} catch (IOException e) {
-				System.out.println("Error E/S: " + e);
-			}
-		
-	}
+            // Leer cada línea del archivo y agregarla al ArrayList
+            while ((linea = br.readLine()) != null) {
+                lineasArchivo.add(linea);
+            }
+
+            // Procesar cada línea del archivo
+            for (String s : lineasArchivo) {
+                String[] partes = s.split(";");
+                String ciudad = partes[0];
+                String nums = partes[1];
+                String[] nums2 = partes[2].split(",");
+                String[] colindantes = partes[3].split(",");
+
+                // Imprimir información de la ciudad y sus coordenadas
+                System.out.println("La ciudad " + ciudad + " que está en las coordenadas (" + nums + ", " + nums2[0] + ", " + nums2[1] + ") sus ciudades colindantes son:");
+                
+                // Calcular y mostrar la distancia entre la ciudad y sus colindantes
+                for (String colindante : colindantes) {
+                    double distancia = calcularDistancia(Integer.parseInt(nums), Integer.parseInt(nums2[0]), Integer.parseInt(nums2[1]), colindante);
+                    System.out.println("- " + colindante + " a una distancia de " + distancia);
+                }
+            }
+
+            fr.close();
+            br.close();
+        } catch (IOException e) {
+            System.out.println("Error E/S: " + e);
+        } catch (NumberFormatException e) {
+            System.out.println("Error de formato numérico: " + e);
+        }
+    }
+
+    // Método para calcular la distancia entre dos coordenadas
+    public static double calcularDistancia(int x1, int x2, int y2, String ciudad) {
+        int y1 = 0;
+
+        // Asignar coordenadas según la ciudad
+        switch (ciudad) {
+        case "San Francisco":
+            y1 = 235;
+            y2 = 315;
+            break;
+        case "Chicago":
+            y1 = 300;
+            y2 = 280;
+            break;
+        case "Manila":
+            y1 = 350;
+            y2 = 280;
+            break;
+        case "Tokio":
+            y1 = 300;
+            y2 = 330;
+            break;
+        case "Montreal":
+            y1 = 320;
+            y2 = 320;
+            break;
+        case "Atlanta":
+            y1 = 350;
+            y2 = 280;
+            break;
+        case "Nueva York":
+            y1 = 380;
+            y2 = 290;
+            break;
+        case "Washington":
+            y1 = 360;
+            y2 = 330;
+            break;
+        case "Londres":
+            y1 = 700;
+            y2 = 230;
+            break;
+        case "Madrid":
+            y1 = 687;
+            y2 = 290;
+            break;
+        case "Paris":
+            y1 = 727;
+            y2 = 250;
+            break;
+        case "Essen":
+            y1 = 755;
+            y2 = 190;
+            break;
+        case "Milan":
+            y1 = 755;
+            y2 = 235;
+            break;
+        case "San Petersburgo":
+            y1 = 815;
+            y2 = 210;
+            break;
+        case "Los Angeles":
+            y1 = 275;
+            y2 = 355;
+            break;
+        case "Mexico DF":
+            y1 = 300;
+            y2 = 385;
+            break;
+        case "Bogota":
+            y1 = 400;
+            y2 = 460;
+            break;
+        case "Lima":
+            y1 = 395;
+            y2 = 520;
+            break;
+        case "Santiago de Chile":
+            y1 = 430;
+            y2 = 620;
+            break;
+        case "Buenos Aires":
+            y1 = 453;
+            y2 = 670;
+            break;
+        case "Sao Paulo":
+            y1 = 520;
+            y2 = 570;
+            break;
+        case "Lagos":
+            y1 = 710;
+            y2 = 450;
+            break;
+        case "Kinsasa":
+            y1 = 770;
+            y2 = 540;
+            break;
+        case "Jartum":
+            y1 = 815;
+            y2 = 450;
+            break;
+        case "Johannesburgo":
+            y1 = 815;
+            y2 = 630;
+            break;
+        case "Argel":
+            y1 = 730;
+            y2 = 330;
+            break;
+        case "El Cairo":
+            y1 = 820;
+            y2 = 350;
+            break;
+        case "Riad":
+            y1 = 895;
+            y2 = 385;
+            break;
+        case "Bagdad":
+            y1 = 880;
+            y2 = 320;
+            break;
+        case "Moscu":
+            y1 = 890;
+            y2 = 230;
+            break;
+        case "Teheran":
+            y1 = 920;
+            y2 = 310;
+            break;
+        case "Karachi":
+            y1 = 980;
+            y2 = 355;
+            break;
+        case "Nueva Delhi":
+            y1 = 1025;
+            y2 = 330;
+            break;
+        case "Calcuta":
+            y1 = 1070;
+            y2 = 370;
+            break;
+        case "Madras":
+            y1 = 1035;
+            y2 = 410;
+            break;
+        case "Yakarta":
+            y1 = 1150;
+            y2 = 525;
+            break;
+        case "Bangkok":
+            y1 = 1120;
+            y2 = 415;
+            break;
+        case "Hong Kong":
+            y1 = 1165;
+            y2 = 370;
+            break;
+        case "Shanghai":
+            y1 = 1195;
+            y2 = 355;
+            break;
+        case "Pekin":
+            y1 = 1175;
+            y2 = 300;
+            break;
+        case "Seul":
+            y1 = 1225;
+            y2 = 297;
+            break;
+        case "Osaka":
+            y1 = 1255;
+            y2 = 320;
+            break;
+        case "Taipei":
+            y1 = 1205;
+            y2 = 375;
+            break;
+        case "Ho Chi Minh":
+            y1 = 1148;
+            y2 = 429;
+            break;
+        case "Sidney":
+            y1 = 1320;
+            y2 = 645;
+            break;
+        default:
+            // Coordenadas por defecto para ciudades no listadas
+            y1 = 0;
+            y2 = 0;
+    }
+
+    return Math.sqrt(Math.pow(y2 - x1, 2) + Math.pow(x2 - y1, 2));
+}
 
 }
