@@ -1,40 +1,49 @@
-package CCP.bin;
+package Act2;
 
 import java.io.*;
 
-public class CCP_bin {
-
+public class Enfermedad {
     public static void main(String[] args) {
         try {
-            // Leer el fichero binario
-            DataInputStream dis = new DataInputStream(new FileInputStream("C:\\Dennis\\programacion\\UF3\\src3\\CCP"));
+            // Lectura del archivo CCP.bin
+            FileInputStream fileInputStream = new FileInputStream("CCP.bin");
+            DataInputStream dataInputStream = new DataInputStream(fileInputStream);
 
-            // Leer la explicación del fichero
-            String explicacion = dis.readUTF();
+            // Lectura de la explicación del archivo
+            String explicacion = dataInputStream.readUTF();
+            System.out.println("Explicación del archivo: " + explicacion);
 
-            // Procesar el resto de los datos
-            while (dis.available() > 0) {
-                // Leer y procesar los datos de las ciudades y enfermedades
-                String ciudad = dis.readUTF();
-                String enfermedad = obtenerEnfermedadPrincipal(ciudad); // Implementa esta función
+            // Creación del archivo ciudades-enfermedad.bin
+            FileOutputStream fileOutputStream = new FileOutputStream("ciudades-enfermedad.bin");
+            DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
 
-                // Guardar en el fichero ciudades-enfermedad.bin
-                DataOutputStream dos = new DataOutputStream(new FileOutputStream("ciudades-enfermedad.bin", true));
-                dos.writeUTF(ciudad + ": " + enfermedad);
-                dos.close();
+            // Lectura de las ciudades y sus enfermedades principales
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("ciudades.txt"));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                // Dividir la línea en partes usando el punto y coma como separador
+                String[] parts = line.split(";");
+                // Saltar líneas vacías o que no contienen datos de ciudad
+                if (parts.length < 4) continue;
+                // Leer las coordenadas de la ciudad
+                String ciudad = parts[0];
+                // La enfermedad principal se encuentra en el índice 1
+                int codigoEnfermedad = Integer.parseInt(parts[1].trim());
+                // Escribir en el archivo ciudades-enfermedad.bin
+                String ciudadEnfermedad = "Ciudad: " + ciudad + " - Código de Enfermedad: " + codigoEnfermedad + "\n";
+                dataOutputStream.writeBytes(ciudadEnfermedad);
             }
 
-            dis.close();
+            // Cierre de flujos
+            dataInputStream.close();
+            dataOutputStream.close();
+            bufferedReader.close();
+
+            System.out.println("Se ha creado el archivo ciudades-enfermedad.bin con éxito.");
+
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error al procesar el archivo: " + e.getMessage());
         }
     }
-
-    private static String obtenerEnfermedadPrincipal(String ciudad) {
-        // Implementa la lógica para asociar la ciudad con su enfermedad principal
-        // Puedes utilizar la información proporcionada en el fichero binario
-        return "EnfermedadPrincipal";
-    }
 }
-
-		            
+          
