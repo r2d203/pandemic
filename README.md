@@ -1,2 +1,2 @@
 Ell mull buenas a todos xikos.
-Moreno cabron
+Messi es mierda CR7 el mejor
